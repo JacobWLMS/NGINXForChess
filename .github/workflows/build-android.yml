@@ -18,9 +18,8 @@ jobs:
       - name: Setup export directories
         run: mkdir -v -p build/android
 
-      - name: Import project
-        run: godot --headless --import 2>&1 || true
-        timeout-minutes: 2
+      - name: Import project assets
+        run: timeout 60 godot --headless --editor --quit 2>&1 || true
 
       - name: Build debug APK
         run: godot --headless --verbose --export-debug "Android" build/android/mergedropx-debug.apk
