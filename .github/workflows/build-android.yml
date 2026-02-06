@@ -10,7 +10,7 @@ env:
 jobs:
   build-android:
     name: Export Android Debug APK
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:4.2.1
 
