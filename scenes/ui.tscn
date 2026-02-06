@@ -1,0 +1,557 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui_manager.gd" id="1"]
+
+[node name="UIManager" type="CanvasLayer"]
+script = ExtResource("1")
+
+[node name="MenuScreen" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="BG" type="ColorRect" parent="MenuScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.102, 0.039, 0.18, 1)
+
+[node name="VBox" type="VBoxContainer" parent="MenuScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = 80.0
+offset_right = -60.0
+offset_bottom = -40.0
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="MenuScreen/VBox"]
+layout_mode = 2
+text = "MERGEDROPX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Subtitle" type="Label" parent="MenuScreen/VBox"]
+layout_mode = 2
+text = "DROP  MERGE  SCORE"
+horizontal_alignment = 1
+
+[node name="Stats" type="HBoxContainer" parent="MenuScreen/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="HS_Icon" type="Label" parent="MenuScreen/VBox/Stats"]
+layout_mode = 2
+text = "BEST:"
+
+[node name="HighscoreVal" type="Label" parent="MenuScreen/VBox/Stats"]
+layout_mode = 2
+text = "0"
+
+[node name="Sep1" type="VSeparator" parent="MenuScreen/VBox/Stats"]
+layout_mode = 2
+
+[node name="Coin_Icon" type="Label" parent="MenuScreen/VBox/Stats"]
+layout_mode = 2
+text = "COINS:"
+
+[node name="CoinsVal" type="Label" parent="MenuScreen/VBox/Stats"]
+layout_mode = 2
+text = "0"
+
+[node name="Sep2" type="VSeparator" parent="MenuScreen/VBox/Stats"]
+layout_mode = 2
+
+[node name="Streak_Icon" type="Label" parent="MenuScreen/VBox/Stats"]
+layout_mode = 2
+text = "STREAK:"
+
+[node name="StreakVal" type="Label" parent="MenuScreen/VBox/Stats"]
+layout_mode = 2
+text = "0"
+
+[node name="Spacer" type="Control" parent="MenuScreen/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+
+[node name="Buttons" type="VBoxContainer" parent="MenuScreen/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="PlayBtn" type="Button" parent="MenuScreen/VBox/Buttons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+text = "PLAY"
+
+[node name="ShopBtn" type="Button" parent="MenuScreen/VBox/Buttons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 60)
+text = "SHOP"
+
+[node name="DailyBtn" type="Button" parent="MenuScreen/VBox/Buttons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 60)
+text = "DAILY REWARD"
+
+[node name="NotifDot" type="Label" parent="MenuScreen/VBox/Buttons/DailyBtn"]
+layout_mode = 0
+offset_right = 30.0
+offset_bottom = 23.0
+text = ""
+
+[node name="HUD" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ScoreBar" type="HBoxContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 15.0
+offset_right = -20.0
+offset_bottom = 55.0
+
+[node name="ScoreIcon" type="Label" parent="HUD/ScoreBar"]
+layout_mode = 2
+text = "SCORE "
+
+[node name="ScoreLabel" type="Label" parent="HUD/ScoreBar"]
+layout_mode = 2
+text = "0"
+
+[node name="CoinBar" type="HBoxContainer" parent="HUD"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_top = 15.0
+offset_right = -20.0
+offset_bottom = 50.0
+
+[node name="CoinIcon" type="Label" parent="HUD/CoinBar"]
+layout_mode = 2
+text = "COINS "
+
+[node name="CoinLabel" type="Label" parent="HUD/CoinBar"]
+layout_mode = 2
+text = "0"
+
+[node name="PauseBtn" type="Button" parent="HUD"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -70.0
+offset_top = 55.0
+offset_right = -20.0
+offset_bottom = 95.0
+text = "||"
+
+[node name="ComboContainer" type="VBoxContainer" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 55.0
+offset_right = 100.0
+offset_bottom = 100.0
+alignment = 1
+
+[node name="ComboLabel" type="Label" parent="HUD/ComboContainer"]
+layout_mode = 2
+text = "x2 COMBO"
+horizontal_alignment = 1
+
+[node name="ComboBar" type="ProgressBar" parent="HUD/ComboContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 8)
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="PowerUps" type="HBoxContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = -80.0
+offset_right = -60.0
+offset_bottom = -15.0
+alignment = 1
+theme_override_constants/separation = 30
+
+[node name="BombBtn" type="Button" parent="HUD/PowerUps"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 60)
+text = "BOMB"
+
+[node name="Count" type="Label" parent="HUD/PowerUps/BombBtn"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 38.0
+offset_right = 80.0
+offset_bottom = 58.0
+text = "3"
+
+[node name="ShakeBtn" type="Button" parent="HUD/PowerUps"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 60)
+text = "SHAKE"
+
+[node name="Count" type="Label" parent="HUD/PowerUps/ShakeBtn"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 38.0
+offset_right = 80.0
+offset_bottom = 58.0
+text = "1"
+
+[node name="FreezeBtn" type="Button" parent="HUD/PowerUps"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 60)
+text = "FREEZE"
+
+[node name="Count" type="Label" parent="HUD/PowerUps/FreezeBtn"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 38.0
+offset_right = 80.0
+offset_bottom = 58.0
+text = "2"
+
+[node name="GameOverScreen" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="BG" type="ColorRect" parent="GameOverScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.05, 0.02, 0.1, 0.9)
+
+[node name="VBox" type="VBoxContainer" parent="GameOverScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = 120.0
+offset_right = -60.0
+offset_bottom = -60.0
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="Title" type="Label" parent="GameOverScreen/VBox"]
+layout_mode = 2
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="GameOverScreen/VBox"]
+layout_mode = 2
+text = "SCORE"
+horizontal_alignment = 1
+
+[node name="ScoreVal" type="Label" parent="GameOverScreen/VBox"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="NewBest" type="Label" parent="GameOverScreen/VBox"]
+visible = false
+layout_mode = 2
+text = "NEW BEST!"
+horizontal_alignment = 1
+
+[node name="Stats" type="VBoxContainer" parent="GameOverScreen/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="EarnedLabel" type="Label" parent="GameOverScreen/VBox/Stats"]
+layout_mode = 2
+text = "Coins earned:"
+
+[node name="EarnedCoins" type="Label" parent="GameOverScreen/VBox/Stats"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="MergeLabel" type="Label" parent="GameOverScreen/VBox/Stats"]
+layout_mode = 2
+text = "Highest merge:"
+
+[node name="HighMerge" type="Label" parent="GameOverScreen/VBox/Stats"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="ComboLabel" type="Label" parent="GameOverScreen/VBox/Stats"]
+layout_mode = 2
+text = "Best combo:"
+
+[node name="BestCombo" type="Label" parent="GameOverScreen/VBox/Stats"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="GameOverScreen/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="ReviveBtn" type="Button" parent="GameOverScreen/VBox/Buttons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 65)
+text = "REVIVE (Watch Ad)"
+
+[node name="RetryBtn" type="Button" parent="GameOverScreen/VBox/Buttons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 65)
+text = "PLAY AGAIN"
+
+[node name="HomeBtn" type="Button" parent="GameOverScreen/VBox/Buttons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 55)
+text = "HOME"
+
+[node name="PauseModal" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Overlay" type="ColorRect" parent="PauseModal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.7)
+
+[node name="Panel" type="PanelContainer" parent="PauseModal"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+
+[node name="VBox" type="VBoxContainer" parent="PauseModal/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="Title" type="Label" parent="PauseModal/Panel/VBox"]
+layout_mode = 2
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="ResumeBtn" type="Button" parent="PauseModal/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 55)
+text = "RESUME"
+
+[node name="QuitBtn" type="Button" parent="PauseModal/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 55)
+text = "QUIT"
+
+[node name="DailyModal" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Overlay" type="ColorRect" parent="DailyModal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.7)
+
+[node name="Panel" type="PanelContainer" parent="DailyModal"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -200.0
+offset_right = 250.0
+offset_bottom = 200.0
+
+[node name="VBox" type="VBoxContainer" parent="DailyModal/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Title" type="Label" parent="DailyModal/Panel/VBox"]
+layout_mode = 2
+text = "DAILY REWARD"
+horizontal_alignment = 1
+
+[node name="Info" type="Label" parent="DailyModal/Panel/VBox"]
+layout_mode = 2
+text = "Come back every day for bigger rewards! Your streak multiplies the bonus!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ClaimBtn" type="Button" parent="DailyModal/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 60)
+text = "CLAIM"
+
+[node name="ClaimDoubleBtn" type="Button" parent="DailyModal/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 55)
+text = "WATCH AD = 2X REWARD"
+
+[node name="CloseBtn" type="Button" parent="DailyModal/Panel/VBox"]
+layout_mode = 2
+text = "Close"
+
+[node name="ShopModal" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Overlay" type="ColorRect" parent="ShopModal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.7)
+
+[node name="Panel" type="PanelContainer" parent="ShopModal"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -300.0
+offset_right = 280.0
+offset_bottom = 300.0
+
+[node name="VBox" type="VBoxContainer" parent="ShopModal/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="ShopModal/Panel/VBox"]
+layout_mode = 2
+text = "SHOP"
+horizontal_alignment = 1
+
+[node name="Items" type="VBoxContainer" parent="ShopModal/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="bomb_pack" type="Button" parent="ShopModal/Panel/VBox/Items"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+text = "Bomb x3 - 100 coins"
+
+[node name="shake_pack" type="Button" parent="ShopModal/Panel/VBox/Items"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+text = "Shake x2 - 200 coins"
+
+[node name="freeze_pack" type="Button" parent="ShopModal/Panel/VBox/Items"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+text = "Freeze x3 - 150 coins"
+
+[node name="combo_upgrade" type="Button" parent="ShopModal/Panel/VBox/Items"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+text = "Combo Duration +1s - 500 coins"
+
+[node name="coin_multiplier" type="Button" parent="ShopModal/Panel/VBox/Items"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+text = "Coin Multiplier +10% - 750 coins"
+
+[node name="CloseBtn" type="Button" parent="ShopModal/Panel/VBox"]
+layout_mode = 2
+text = "Close"
+
+[node name="FakeAdModal" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="BG" type="ColorRect" parent="FakeAdModal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.95)
+
+[node name="Panel" type="PanelContainer" parent="FakeAdModal"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -350.0
+offset_right = 300.0
+offset_bottom = 350.0
+
+[node name="VBox" type="VBoxContainer" parent="FakeAdModal/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="AdLabel" type="Label" parent="FakeAdModal/Panel/VBox"]
+layout_mode = 2
+text = "ADVERTISEMENT"
+horizontal_alignment = 1
+
+[node name="AdTitle" type="Label" parent="FakeAdModal/Panel/VBox"]
+layout_mode = 2
+text = "99.9% CANT SOLVE THIS!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="AdImage" type="Label" parent="FakeAdModal/Panel/VBox"]
+layout_mode = 2
+text = "ONLY 1% GET TO LEVEL 100!!! DOWNLOAD NOW - FREE!!!"
+horizontal_alignment = 1
+
+[node name="AdSmall" type="Label" parent="FakeAdModal/Panel/VBox"]
+layout_mode = 2
+text = "(this is a fake ad, you are already playing the game)"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="CloseBtn" type="Button" parent="FakeAdModal/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+text = "Close Ad"
