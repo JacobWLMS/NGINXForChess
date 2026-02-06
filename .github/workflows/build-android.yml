@@ -1,0 +1,59 @@
+name: Build Android APK
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-android:
+    name: Export Android Debug APK
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.2.1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup environment
+        run: |
+          mkdir -v -p build/android
+
+          # GitHub Actions sets HOME=/github/home in containers, but
+          # godot-ci installs templates and keystore under /root.
+          # Link them to where Godot actually looks ($HOME).
+          mkdir -p $HOME/.local/share/godot/export_templates
+          mkdir -p $HOME/.config/godot
+
+          # Link export templates from /root to $HOME
+          if [ -d "/root/.local/share/godot/export_templates/4.2.1.stable" ]; then
+            ln -sf /root/.local/share/godot/export_templates/4.2.1.stable \
+              $HOME/.local/share/godot/export_templates/4.2.1.stable
+            echo "Linked export templates"
+            ls -la $HOME/.local/share/godot/export_templates/4.2.1.stable/android_debug.apk
+          fi
+
+          # Write editor settings pointing to the container's SDK and keystore
+          cat > $HOME/.config/godot/editor_settings-4.tres <<'EOF'
+[gd_resource type="EditorSettings" format=3]
+
+[resource]
+export/android/android_sdk_path = "/usr/lib/android-sdk"
+export/android/debug_keystore = "/root/debug.keystore"
+export/android/debug_keystore_user = "androiddebugkey"
+export/android/debug_keystore_pass = "android"
+EOF
+
+      - name: Import project
+        run: timeout 60 godot --headless --editor --quit 2>&1 || true
+
+      - name: Build debug APK
+        run: godot --headless --verbose --export-debug "Android" build/android/mergedropx-debug.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mergedropx-debug-apk
+          path: build/android/mergedropx-debug.apk
+          if-no-files-found: error
+          retention-days: 14
