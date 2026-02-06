@@ -15,57 +15,43 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup directories
+      - name: Setup environment
         run: |
           mkdir -v -p build/android
-          mkdir -v -p ~/.config/godot
-          mkdir -v -p ~/.local/share/godot/export_templates/4.2.1.stable
 
-      - name: Setup Android SDK and debug keystore
-        run: |
-          # Generate debug keystore only if it doesn't already exist
-          if [ ! -f /root/debug.keystore ]; then
-            keytool -keyalg RSA -genkeypair -alias androiddebugkey \
-              -keypass android -keystore /root/debug.keystore \
-              -storepass android -dname "CN=Android Debug,O=Android,C=US" \
-              -validity 9999
+          # GitHub Actions sets HOME=/github/home in containers, but
+          # godot-ci installs templates and keystore under /root.
+          # Link them to where Godot actually looks ($HOME).
+          mkdir -p $HOME/.local/share/godot/export_templates
+          mkdir -p $HOME/.config/godot
+
+          # Link export templates from /root to $HOME
+          if [ -d "/root/.local/share/godot/export_templates/4.2.1.stable" ]; then
+            ln -sf /root/.local/share/godot/export_templates/4.2.1.stable \
+              $HOME/.local/share/godot/export_templates/4.2.1.stable
+            echo "Linked export templates"
+            ls -la $HOME/.local/share/godot/export_templates/4.2.1.stable/android_debug.apk
           fi
-          echo "Debug keystore located at:"
-          ls -la /root/debug.keystore
 
-          # Write Godot editor settings (no leading whitespace!)
-          cat > ~/.config/godot/editor_settings-4.tres <<'EOF'
-          [gd_resource type="EditorSettings" format=3]
+          # Write editor settings pointing to the container's SDK and keystore
+          cat > $HOME/.config/godot/editor_settings-4.tres <<'EOF'
+[gd_resource type="EditorSettings" format=3]
 
-          [resource]
-          export/android/android_sdk_path = "/usr/lib/android-sdk"
-          export/android/debug_keystore = "/root/debug.keystore"
-          export/android/debug_keystore_user = "androiddebugkey"
-          export/android/debug_keystore_pass = "android"
-          EOF
-          echo "Editor settings written:"
-          cat ~/.config/godot/editor_settings-4.tres
-
-      - name: Link export templates
-        run: |
-          echo "=== Searching for export templates ==="
-          find /root -name "android_debug.apk" 2>/dev/null || true
-          find /root -name "*.tpz" 2>/dev/null || true
-          ls -la /root/.local/share/godot/export_templates/ 2>/dev/null || true
-          ls -la /root/.local/share/godot/templates/ 2>/dev/null || true
+[resource]
+export/android/android_sdk_path = "/usr/lib/android-sdk"
+export/android/debug_keystore = "/root/debug.keystore"
+export/android/debug_keystore_user = "androiddebugkey"
+export/android/debug_keystore_pass = "android"
+EOF
 
       - name: Import project
         run: timeout 60 godot --headless --editor --quit 2>&1 || true
 
       - name: Build debug APK
-        run: |
-          godot --headless --verbose --export-debug "Android" build/android/mergedropx-debug.apk 2>&1
-          echo "=== Build output ==="
-          ls -la build/android/ || true
+        run: godot --headless --verbose --export-debug "Android" build/android/mergedropx-debug.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: mergedropx-debug-apk
           path: build/android/mergedropx-debug.apk
