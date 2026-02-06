@@ -1,0 +1,14 @@
+{
+  "appId": "com.mergedropx.game",
+  "appName": "MergeDropX",
+  "webDir": ".",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#1a0a2e"
+    }
+  }
+}

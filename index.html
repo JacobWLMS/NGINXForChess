@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a0a2e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>MergeDropX</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Splash / Loading Screen -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <div class="splash-ball">2048</div>
+            </div>
+            <h1 class="splash-title">MERGE<span>DROP</span>X</h1>
+            <div class="loading-bar-container">
+                <div class="loading-bar" id="loading-bar"></div>
+            </div>
+            <p class="loading-text" id="loading-text">Loading assets...</p>
+        </div>
+    </div>
+
+    <!-- Main Menu -->
+    <div id="main-menu" class="screen hidden">
+        <div class="menu-bg-particles" id="menu-particles"></div>
+        <div class="menu-content">
+            <h1 class="game-title">MERGE<span>DROP</span>X</h1>
+            <div class="menu-stats">
+                <div class="stat-box">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value" id="menu-highscore">0</div>
+                    <div class="stat-label">Best Score</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value" id="menu-coins">0</div>
+                    <div class="stat-label">Coins</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value" id="menu-streak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+            <button class="btn btn-play" id="btn-play">
+                <span class="btn-text">▶ PLAY</span>
+                <div class="btn-shine"></div>
+            </button>
+            <button class="btn btn-shop" id="btn-shop">🛒 SHOP</button>
+            <button class="btn btn-daily" id="btn-daily">
+                🎁 DAILY REWARD
+                <span class="notification-dot" id="daily-dot"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Daily Reward Modal -->
+    <div id="daily-reward-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content daily-modal">
+            <h2>🎁 DAILY REWARD</h2>
+            <div class="daily-grid" id="daily-grid"></div>
+            <button class="btn btn-claim" id="btn-claim-daily">CLAIM</button>
+            <button class="btn btn-claim-double" id="btn-claim-double">📺 WATCH AD = 2X</button>
+        </div>
+    </div>
+
+    <!-- Shop Modal -->
+    <div id="shop-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content shop-modal">
+            <h2>🛒 SHOP</h2>
+            <button class="modal-close" id="shop-close">✕</button>
+            <div class="shop-items" id="shop-items"></div>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen hidden">
+        <div class="game-hud">
+            <div class="hud-left">
+                <div class="score-display">
+                    <span class="score-label">SCORE</span>
+                    <span class="score-value" id="game-score">0</span>
+                </div>
+            </div>
+            <div class="hud-center">
+                <div class="combo-display hidden" id="combo-display">
+                    <span class="combo-value" id="combo-value">x2</span>
+                    <span class="combo-label">COMBO</span>
+                </div>
+            </div>
+            <div class="hud-right">
+                <div class="coin-display">
+                    <span class="coin-icon">💰</span>
+                    <span class="coin-value" id="game-coins">0</span>
+                </div>
+                <button class="btn-pause" id="btn-pause">⏸</button>
+            </div>
+        </div>
+        <div class="next-ball-preview">
+            <span class="next-label">NEXT</span>
+            <canvas id="next-canvas" width="60" height="60"></canvas>
+        </div>
+        <canvas id="game-canvas"></canvas>
+        <div class="danger-line" id="danger-line"></div>
+        <!-- Power-up bar -->
+        <div class="powerup-bar" id="powerup-bar">
+            <button class="powerup-btn" id="pu-bomb" data-pu="bomb">
+                <span class="pu-icon">💣</span>
+                <span class="pu-count" id="pu-bomb-count">3</span>
+            </button>
+            <button class="powerup-btn" id="pu-shake" data-pu="shake">
+                <span class="pu-icon">🌪️</span>
+                <span class="pu-count" id="pu-shake-count">1</span>
+            </button>
+            <button class="powerup-btn" id="pu-freeze" data-pu="freeze">
+                <span class="pu-icon">❄️</span>
+                <span class="pu-count" id="pu-freeze-count">2</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Pause Modal -->
+    <div id="pause-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content pause-modal">
+            <h2>PAUSED</h2>
+            <button class="btn btn-resume" id="btn-resume">▶ RESUME</button>
+            <button class="btn btn-quit" id="btn-quit-pause">🏠 QUIT</button>
+        </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameover-screen" class="screen hidden">
+        <div class="gameover-content">
+            <h1 class="gameover-title">GAME OVER</h1>
+            <div class="gameover-score">
+                <div class="final-score-label">SCORE</div>
+                <div class="final-score" id="final-score">0</div>
+                <div class="new-best hidden" id="new-best">🏆 NEW BEST!</div>
+            </div>
+            <div class="gameover-rewards">
+                <div class="reward-item">
+                    <span>💰 Coins earned:</span>
+                    <span id="coins-earned">0</span>
+                </div>
+                <div class="reward-item">
+                    <span>🔢 Highest merge:</span>
+                    <span id="highest-merge">0</span>
+                </div>
+                <div class="reward-item">
+                    <span>🔥 Best combo:</span>
+                    <span id="best-combo">0</span>
+                </div>
+            </div>
+            <button class="btn btn-revive" id="btn-revive">
+                📺 REVIVE (Watch Ad)
+            </button>
+            <button class="btn btn-play" id="btn-retry">🔄 PLAY AGAIN</button>
+            <button class="btn btn-shop" id="btn-home">🏠 HOME</button>
+        </div>
+    </div>
+
+    <!-- Floating text container -->
+    <div id="floating-texts"></div>
+    <!-- Particle container -->
+    <canvas id="particle-canvas"></canvas>
+
+    <script src="js/audio.js"></script>
+    <script src="js/save.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
